@@ -1,0 +1,344 @@
+{
+	"info": {
+		"_postman_id": "0a5e8cf5-943e-4994-a6f4-9b29aba8f84b",
+		"name": "TP_integrador_G3",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "LISTAR TABLA USUARIOS",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/usuarios",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"usuarios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET ",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LISTAR TABLA TAREAS",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/tareas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"tareas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "USUARIO POR DNI",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/usuarios/:dni",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"usuarios",
+						":dni"
+					],
+					"variable": [
+						{
+							"key": "dni",
+							"value": "\"DNI 14.333.333\""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "USUARIO Y PASS POR DNI",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/usuarios_pass/:dni",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"usuarios_pass",
+						":dni"
+					],
+					"variable": [
+						{
+							"key": "dni",
+							"value": "\"PAS45569-k \""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TAREAS POR DNI",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/tarea/:dni",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"tarea",
+						":dni"
+					],
+					"variable": [
+						{
+							"key": "dni",
+							"value": "\"PAS45569-k \""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CREAR USUARIO",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "        {\r\n            \"dni_usuario\": \"PAS45569-k \",\r\n            \"nombre_apellido\": \"prueba de funcionamientos\",\r\n            \"fecha_nacimiento\": \"1985-01-22\",\r\n            \"domicilio\": \" casa linda 545 \",\r\n            \"localidad\": \" houston\",\r\n            \"telefono\": \"+15335228\",\r\n            \"username\": \"prueba\",\r\n            \"pass\": \"prueba\"\r\n        }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/add_usuarios",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"add_usuarios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CREAR TAREAS",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n            \"dni_usuario\": \"PAS45569-k \",\r\n            \"titulo\": \"tarea1\",\r\n            \"descripcion\": \"sumar numeros complejos\",\r\n            \"estado\": \"pendiente\",\r\n            \"created\": \"2021-06-01\",\r\n            \"updated\": \"2021-06-01\",\r\n            \"eliminated\": \"2021-06-01\"\r\n            \r\n            }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/add_tareas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"add_tareas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ACTUALIZAR USUARIO",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{           \r\n            \"nombre_apellido\": \" modificado5 \",\r\n            \"fecha_nacimiento\": \"1950-06-12\",\r\n            \"domicilio\": \" modificado 5\",\r\n            \"localidad\": \"modificado\",\r\n            \"telefono\": \"modificado\",\r\n            \"username\":\"cambio\",\r\n            \"pass\":\"cambio\"\r\n            \r\n            }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/update_usuario/:dni",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"update_usuario",
+						":dni"
+					],
+					"variable": [
+						{
+							"key": "dni",
+							"value": "\"DNI 14.333.333\""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ELIMINAR TAREAS POR DNI",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/delete_tarea/:dni",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"delete_tarea",
+						":dni"
+					],
+					"variable": [
+						{
+							"key": "dni",
+							"value": "\"PAS45569-k \""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ELIMINAR USUARIOS POR DNI (solo si  no tienen tareas)",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/delete_usuario/:dni",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"delete_usuario",
+						":dni"
+					],
+					"variable": [
+						{
+							"key": "dni",
+							"value": "\"PAS45569-k \""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CREAR TOKEN",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LOGIN CON TOKEN",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJub21icmUiOiJmcmFuY2siLCJlbWFpbCI6ImZqdHN5c3RlbXNAZW1haWwuY29tIn0sImlhdCI6MTYyMjc0ODU3NCwiZXhwIjoxNjIyNzQ4NjA2fQ.f1RnsAZJj8h5eNepnXKSln70gDg2mHyfwAtP30DrwT0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/posts",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"posts"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

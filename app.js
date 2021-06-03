@@ -3,6 +3,8 @@
 const express = require ('express');
 // requerir o importar mysql2
 const mysql = require ('mysql2');
+// nuevo para utilizar JWT
+const jwt = require ('jsonwebtoken');
 // el numero de puerto esta en config
 const {PORT} = require ('./config/config');
 // crear constante llamada app y generamos una instancia de express
@@ -192,9 +194,9 @@ app.post ('/add_tareas', (req, res) => {
 });
 //actualizar usuario
 app.put ('/update_usuario/:dni', (req, res) => {
- const {dni}=req.params;
- console.log(req.body);
- 
+  const {dni} = req.params;
+  console.log (req.body);
+
   const {
     nombre_apellido,
     fecha_nacimiento,
@@ -207,49 +209,120 @@ app.put ('/update_usuario/:dni', (req, res) => {
 
   const sql = ` UPDATE usuarios SET  nombre_apellido='${nombre_apellido}', fecha_nacimiento='${fecha_nacimiento}', domicilio='${domicilio}',
   localidad='${localidad}', telefono='${telefono}', username='${username}', pass='${pass}'  WHERE dni_usuario='${dni}' `;
-  connection.query (sql,  err => {
-  console.log(err);
-      if (err) throw err;
-      res.send (` dni=${dni} usuario modificado`);
-      console.log (` dni=${dni} usuario modificado`);
-  
-  }); });
-
+  connection.query (sql, err => {
+    console.log (err);
+    if (err) throw err;
+    res.send (` dni=${dni} usuario modificado`);
+    console.log (` dni=${dni} usuario modificado`);
+  });
+});
 
 app.delete ('/delete_tarea/:dni', (req, res) => {
   const {dni} = req.params;
   const sql = `DELETE FROM tareas WHERE dni_usuario=${dni}`;
   connection.query (sql, err => {
-    if (err)  {
+    if (err) {
       console.log (err);
       res.status (404).send ({
         Observaciones: `Se encontraron los siguientes errores: `,
         err,
       });
-    } else{
-    res.status (200).send ({
-      Observaciones: `Las tareas del Usuario con DNI: ${dni} fueron eliminadas `,
-    });
-    console.info (` Las tareas del Usuario con DNI: ${dni} fueron eliminadas`);}
+    } else {
+      res.status (200).send ({
+        Observaciones: `Las tareas del Usuario con DNI: ${dni} fueron eliminadas `,
+      });
+      console.info (
+        ` Las tareas del Usuario con DNI: ${dni} fueron eliminadas`
+      );
+    }
   });
 });
 app.delete ('/delete_usuario/:dni', (req, res) => {
   const {dni} = req.params;
   const sql = `DELETE FROM usuarios WHERE dni_usuario=${dni}`;
   connection.query (sql, err => {
-    if (err)  {
+    if (err) {
       console.log (err);
       res.status (404).send ({
         Observaciones: `Se encontraron los siguientes errores: `,
         err,
       });
-    } else{
-    res.status (200).send ({
-      Observaciones: `El usuario con DNI: ${dni} fue eliminado `,
-    });
-    console.info (` El usuario con  DNI= ${dni} fue eliminando`);}
+    } else {
+      res.status (200).send ({
+        Observaciones: `El usuario con DNI: ${dni} fue eliminado `,
+      });
+      console.info (` El usuario con  DNI= ${dni} fue eliminando`);
+    }
   });
 });
+
+// INICIO: JWT  Biblioteca para la firma / verificación de tokens
+/* La idea es que el usuario puede generar un token. utilizamos la herramienta JWT.
+// cuando el usuario ingrese a login se generara un token.
+// de esa manera un usuario puede ser identificado */
+
+app.post ('/api/login', (req, res) => {
+  const user = {
+    dni_usuario: 'PAS45569-k ',
+    nombre_apellido: 'prueba de funcionamiento',
+    fecha_nacimiento: '1985-01-22',
+    domicilio: ' casa linda 545 ',
+    localidad: ' houston',
+    telefono: '+15335228',
+    username: 'prueba',
+    pass: 'prueba',
+  };
+  // jwt.sign le pasamos la constante user, una llave secreta , tiempo de expiracion. err nos indica el error y
+  // si no hay error nos dara el token
+  // ese token se envia al navegador y de alguna manera lo deberia almacenar el explorador en una cookie o
+  // utilizando localstorage.Authorization: Bearer <token>
+  // mas info:https://jwt.io/introduction
+  // la diferencia con otros JWT deja el token del lado del cliente y no del lado del servidor.
+  jwt.sign ({user}, 'secretkey', {expiresIn: '120s'}, (err, token) => {
+    // enviamos el token hacia el lado del usuario (cliente) valido por 2 minutos
+    res.json ({
+      token,
+    });
+  });
+});
+
+// en este caso vamos a pasar una funcion con el nombre que querramos x ejemplo: verifytoken
+// dentro de los 2 minutos si entras a esta url debrias poder ver esta informacion.
+app.post ('/api/posts', verificarToken, (req, res) => {
+  jwt.verify (req.token, 'secretkey', (error, authData) => {
+    if (error) {
+      res.status (403).send ({
+        Observaciones: `Acceso denegado: por favor iniciar sesion nuevamente `,
+      });
+    } else {
+      res.json ({
+        mensaje: ' Iniciaste sesion correctamente (solo por 120 segundos)',
+        authData,
+      });
+    }
+  });
+});
+// la funcion verificarToken se le pasan 3 paramtros : request, response y next
+// next se ejecuta solo si todo es exitoso
+// Authorization: Bearer <token>
+function verificarToken (req, res, next) {
+  const bearerHeader = req.headers['authorization'];
+
+  if (typeof bearerHeader !== 'undefined') {
+    // aca el token se divide en 3 elementos, el token esta en la posicion1 (2 elemento)
+    const bearerToken = bearerHeader.split (' ')[1];
+    req.token = bearerToken;
+    next ();
+  } else {
+    // 403 significa acceso prohibido
+    res.status (403).send ({
+      Observaciones: `Se encontraron los siguientes errores: `,
+      err,
+    });
+  }
+}
+// FIN: JWT  Biblioteca para la firma / verificación de tokens
+
 // chequeo de conexión
 connection.connect (error => {
   if (error) throw error;
