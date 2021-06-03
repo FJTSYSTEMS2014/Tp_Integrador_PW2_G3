@@ -1,0 +1,26 @@
+{
+  "name": "tp_integrador_pw2_g3",
+  "version": "1.0.0",
+  "description": "Trabajo Integrador G3",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FJTSYSTEMS2014/Tp_Integrador_PW2_G3.git"
+  },
+  "author": "G3",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FJTSYSTEMS2014/Tp_Integrador_PW2_G3/issues"
+  },
+  "homepage": "https://github.com/FJTSYSTEMS2014/Tp_Integrador_PW2_G3#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "mysql2": "^2.2.5",
+    "nodemon": "^2.0.7"
+  }
+}
