@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/bulma.min.css" />
+    <title>
+      Trabajo práctico integrador - API para listar tareas por usuario
+    </title>
+  </head>
+
+  <style>
+    nav {
+      width: 90%;
+      margin: 20px auto;
+    }
+    .w-100,
+    .w-1000 {
+      width: 100%;
+      margin: 0;
+    }
+    .w-100:nth-child(even) {
+      background: hsl(0, 0%, 93%);
+    }
+    .w-100:nth-child(odd) {
+      background: hsl(0, 0%, 98%);
+    }
+    .columns:last-child {
+      margin-bottom: 0;
+    }
+    .column {
+      padding: 0.5%;
+    }
+  </style>
+  <body onload="initApp();">
+    <nav>
+      <h1 class="title mt-3">Lista de tareas - API para el IUPA</h1>
+    </nav>
+
+    <nav class="panel" id="login-form">
+      <p class="panel-heading">Login</p>
+
+      <div class="panel-block">
+        <form>
+          <div class="block">
+            <label class="label" for="user_name">Nombre de usuario: </label>
+            <input
+              type="text"
+              class="input is-primary is-small"
+              id="user_name"
+              placeholder="Nombre de usuario"
+            />
+            <!-- <p id="input_username_help" class="help is-hidden is-danger"></p> -->
+            <label class="label mt-4" for="password">Contraseña: </label>
+            <input
+              type="password"
+              class="input is-primary is-small"
+              id="password"
+            />
+            <!-- <p id="input_password_help" class="help is-hidden is-danger"></p> -->
+            <button
+              type="button"
+              class="button is-small mt-5 is-success"
+              id="loginButton"
+            >
+              Iniciar sesión
+            </button>
+          </div>
+        </form>
+      </div>
+    </nav>
+
+    <nav class="panel p-3" id="contentUser"></nav>
+
+    <nav class="panel" id="panel_tareas">
+      <p class="panel-heading">Listado de tareas para el usuario</p>
+      <div class="panel-block is-flex-wrap-wrap" id="contentTable">
+        <div class="columns w-1000">
+          <div class="column txtName">Titulo</div>
+          <div class="column nmbAge">Estado</div>
+          <div class="column txtUsername">Creada el</div>
+          <div class="column"></div>
+        </div>
+      </div>
+    </nav>
+
+    <template id="contentRow">
+      <div class="columns row w-100">
+        <div class="column txtName pt-2"></div>
+        <div class="column nmbAge pt-2"></div>
+        <div class="column txtUsername pt-2"></div>
+        <div class="column has-text-right">
+          <button class="button is-info mr-1 is-small btnUpdate">Editar</button>
+          <button class="button is-danger is-small btnDelete">Eliminar</button>
+        </div>
+      </div>
+    </template>
+
+    <template id="contentUserRow">
+      <div class="block usrInfo"></div>
+      <button
+        type="button"
+        class="button is-small is-warning"
+        id="logoutButton"
+      >
+        Cerrar sesión
+      </button>
+    </template>
+
+    <script src="app.js"></script>
+    <script src="login.js"></script>
+  </body>
+</html>

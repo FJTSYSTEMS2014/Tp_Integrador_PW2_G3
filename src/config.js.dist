@@ -1,0 +1,10 @@
+module.exports = {
+  PORT: 4000,
+  JWT_SECRET: "****",
+  DB_CONFIG: {
+    host: "localhost",
+    user: "****",
+    password: "****",
+    database: "grupo3",
+  },
+};
