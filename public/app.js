@@ -91,7 +91,6 @@ async function initApp() {
 
     showUser(dni); // Muestra datos del usuario en el panel superior
     await mostrarTareas(dni); // Muestra tareas del usuario en el panel central
-    createTaskFormContent.style.display = ""; // Muestro formulario de carga de nueva tarea
   } else {
     // Usuario no logueado, oculto el contenedor que muestra bienvenida al usuario y botón de logout
     contentUser.style.display = "none";
@@ -115,6 +114,7 @@ async function mostrarTareas(dni_usuario) {
   // verifico que esté logueado antes de mostrar sus tareas
   if (localStorage.getItem("token")) {
     aplicaEstilos();
+    createTaskFormContent.style.display = ""; // Muestro formulario de carga de nueva tarea
     //// Ésta es una iteración para eliminar todos los elementos, menos el 1º que es la fila cabecera
     while (contentTable.children.length > 1) {
       let item = contentTable.lastElementChild;
@@ -123,8 +123,8 @@ async function mostrarTareas(dni_usuario) {
     // obtengo tareas usando la api
     const data = await api(`/tareas/${dni_usuario}`, "get");
     // para cada fila de tareas, uso el template llamando a la función addRow
-    data.forEach(({ titulo, estado, created }) =>
-      addRow(titulo, estado, created)
+    data.forEach(({ titulo, estado, created, id }) =>
+      addRow(titulo, estado, created, id)
     );
   }
 }
@@ -149,7 +149,6 @@ async function showUser(dni_usuario) {
   contentUser.appendChild(userBlock);
 }
 
-// Función para agregar nueva tarea usando la API
 /**
  * Crear tarea
  */
@@ -170,6 +169,34 @@ async function crearTarea() {
     showFormErrors(response.error, "create");
   } else {
     createTaskForm.reset();
+    mostrarTareas(dni_usuario);
+  }
+}
+
+/**
+ * Eliminar tarea
+ */
+async function eliminarTarea(id) {
+  if (confirm("¿Está seguro que desea eliminar la tarea seleccionada?")) {
+    await api(`/tareas/${id}`, "delete");
+
+    const filaTarea = document.querySelector(`[data-id='${id}']`);
+    filaTarea.remove();
+  }
+}
+
+/**
+ * Cambiar el estado de la tarea a completada
+ */
+async function completarTarea(id) {
+  if (
+    confirm(
+      "¿Está seguro que desea cambiar a completada la tarea seleccionada?"
+    )
+  ) {
+    await api(`/tareas/done/${id}`, "put");
+
+    const dni_usuario = localStorage.getItem("dni_usuario");
     mostrarTareas(dni_usuario);
   }
 }

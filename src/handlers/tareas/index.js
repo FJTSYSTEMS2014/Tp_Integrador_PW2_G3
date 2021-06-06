@@ -39,4 +39,30 @@ tareasRouting.post(
   })
 );
 
+tareasRouting.delete(
+  "/tareas/:id",
+  requestHandler(async (req, res) => {
+    const id = parseInt(req.params.id);
+
+    await database.remove(id);
+
+    res.json({
+      message: "Tarea eliminada",
+    });
+  })
+);
+
+tareasRouting.put(
+  "/tareas/done/:id",
+  requestHandler(async (req, res) => {
+    const id = parseInt(req.params.id);
+
+    await database.complete(id);
+
+    res.json({
+      message: "Tarea completada",
+    });
+  })
+);
+
 module.exports = tareasRouting;

@@ -8,18 +8,30 @@ const { DB_CONFIG } = require("./config");
 // inicializo variable para darle valor en la función initConnection
 let connection;
 
+function obtenerFecha() {
+  const fecha_actual = new Date();
+
+  const dia = fecha_actual.getDate();
+  const mes = fecha_actual.getMonth();
+  const anio = fecha_actual.getFullYear();
+  const fecha_completa = anio + "-" + mes + "-" + dia;
+
+  return fecha_completa;
+}
+
 module.exports = {
   // conexión a la base de datos, con la configuración guardada en config.js
   async initConnection() {
     connection = await mysql.createConnection(DB_CONFIG);
   },
-  // recibe un dni de usuario y devuelve todas las tareas asociadas al mismo
+  // recibe un dni de usuario y devuelve todas las tareas asociadas que no tengan baja lógica
   async obtenerTareaporDNI(dni_usuario) {
     let tareas = [];
     [tareas] = await connection.execute(
-      "SELECT * FROM tareas WHERE dni_usuario = ?",
+      "SELECT * FROM tareas WHERE dni_usuario = ? AND eliminated IS NULL",
       [dni_usuario]
     );
+
     return tareas;
   },
   // recibe un id de tarea y devuelve su información
@@ -35,17 +47,12 @@ module.exports = {
       return undefined;
     }
   },
+
   // recibe dni de usuario e inserta una nueva tarea en la base de datos,
   // capturando la información que viene en el body
   async insertarTarea(tarea) {
-    const fecha_actual = new Date();
+    fecha = obtenerFecha();
 
-    const dia = fecha_actual.getDate();
-    const mes = fecha_actual.getMonth();
-    const anio = fecha_actual.getFullYear();
-    const fecha = anio + "-" + mes + "-" + dia;
-
-    console.log(fecha_actual);
     const result = await connection.execute(
       "INSERT INTO tareas (dni_usuario, titulo, descripcion, estado, created, updated, eliminated) VALUES (?, ?, ?, ?, ?, ?, ?)",
       [
@@ -84,6 +91,34 @@ module.exports = {
     } else {
       return undefined;
     }
+  },
+  // Elimina una tarea - Recibe el id a eliminar
+  async remove(id) {
+    const tarea = await this.obtenerTareaporId(id);
+
+    if (!tarea) {
+      throw new Error(`No existe una tarea con id "${id}`);
+    }
+
+    const fecha = obtenerFecha();
+    await connection.execute("UPDATE tareas SET eliminated = ? WHERE id = ?", [
+      fecha,
+      id,
+    ]);
+  },
+  // Cambia estado de una tarea a completada
+  async complete(id) {
+    const tarea = await this.obtenerTareaporId(id);
+
+    if (!tarea) {
+      throw new Error(`No existe una tarea con id "${id}`);
+    }
+
+    console.log("Llegue");
+    await connection.execute(
+      "UPDATE tareas SET estado = 'completada' WHERE id = ?",
+      [id]
+    );
   },
 };
 
