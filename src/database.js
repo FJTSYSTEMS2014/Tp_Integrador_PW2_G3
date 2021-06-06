@@ -37,22 +37,24 @@ module.exports = {
   },
   // recibe dni de usuario e inserta una nueva tarea en la base de datos,
   // capturando la información que viene en el body
-  async insertarTarea(dni_usuario) {
-    const info = {
-      dni_usuario: req.body.dni_usuario,
-      titulo: req.body.titulo,
-      descripcion: req.body.descripcion,
-    };
+  async insertarTarea(tarea) {
+    const fecha_actual = new Date();
 
+    const dia = fecha_actual.getDate();
+    const mes = fecha_actual.getMonth();
+    const anio = fecha_actual.getFullYear();
+    const fecha = anio + "-" + mes + "-" + dia;
+
+    console.log(fecha_actual);
     const result = await connection.execute(
       "INSERT INTO tareas (dni_usuario, titulo, descripcion, estado, created, updated, eliminated) VALUES (?, ?, ?, ?, ?, ?, ?)",
       [
-        info.dni_usuario,
-        info.titulo,
-        info.descripcion,
+        tarea.dni_usuario,
+        tarea.titulo,
+        tarea.descripcion,
         "pendiente",
-        "NOW()",
-        "NOW()",
+        fecha,
+        fecha,
         null,
       ]
     );

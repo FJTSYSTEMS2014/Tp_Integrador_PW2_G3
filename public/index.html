@@ -72,6 +72,44 @@
       </div>
     </nav>
 
+    <nav class="panel" id="form-create">
+      <p class="panel-heading">Agregar nueva tarea para el usuario</p>
+      <div class="panel-block">
+        <form id="createTaskForm">
+          <div class="block">
+            <div class="columns">
+              <div class="column m-5">
+                <label class="label" for="titulo">Título: </label>
+                <input
+                  type="text"
+                  class="input is-primary is-small"
+                  id="titulo"
+                  placeholder="Título"
+                />
+                <p id="inputTituloHelp" class="help is-hidden is-danger"></p>
+              </div>
+
+              <div class="column m-5">
+                <label class="label" for="descripcion">Descripción:</label>
+                <input
+                  type="text"
+                  class="input is-primary is-small"
+                  id="descripcion"
+                />
+              </div>
+            </div>
+            <button
+              type="button"
+              class="button is-small ml-3 is-success"
+              id="createButton"
+            >
+              Crear tarea
+            </button>
+          </div>
+        </form>
+      </div>
+    </nav>
+
     <template id="contentRow">
       <div class="columns row w-100">
         <div class="column txtTitulo pt-2"></div>

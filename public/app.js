@@ -10,11 +10,20 @@ const userRow = document.getElementById("contentUserRow").content;
 // Referencia al panel de listado de tareas, para ocultar o mostrar dependiendo si está logueado o no
 const panelTareas = document.getElementById("panel_tareas");
 
-// Cargar en esta parte Referencias a elementos del formulario para cargar nueva tarea
+// Referencias a elementos del formulario para cargar nueva tarea
+const tituloText = document.getElementById("titulo");
+const descripcionText = document.getElementById("descripcion");
+
+// En estos elementos es donde se mostrarán los errores para nueva tarea y editar tarea
+const tituloHelp = document.getElementById("inputTituloHelp");
 
 // Referencia al formulario para cargar nueva tarea
-// const createUserFormContent = document.getElementById("form-create");
-// const createUserForm = document.getElementById("createUserForm");
+const createTaskFormContent = document.getElementById("form-create");
+const createTaskForm = document.getElementById("createTaskForm");
+
+// Referencia al botón de crear tarea y funcionalidad para llamar a función crearTarea()
+const btnCreate = document.getElementById("createButton");
+btnCreate.addEventListener("click", () => crearTarea());
 
 function addRow(titulo, estado, created, id_tarea) {
   // Clono el template en una nueva variable
@@ -82,20 +91,30 @@ async function initApp() {
 
     showUser(dni); // Muestra datos del usuario en el panel superior
     await mostrarTareas(dni); // Muestra tareas del usuario en el panel central
+    createTaskFormContent.style.display = ""; // Muestro formulario de carga de nueva tarea
   } else {
     // Usuario no logueado, oculto el contenedor que muestra bienvenida al usuario y botón de logout
     contentUser.style.display = "none";
     panelTareas.classList.add("is-hidden");
+    // oculto formulario para cargar nueva tarea
+    createTaskFormContent.style.display = "none";
   }
+}
+
+function aplicaEstilos() {
+  contentUser.style.width = "90%";
+  panelTareas.style.width = "90%";
+  panelTareas.style.padding = "1rem";
+  panelTareas.classList.remove("is-hidden");
+  createTaskFormContent.style.width = "90%";
+  createTaskFormContent.style.padding = "1rem";
+  createTaskFormContent.children[1].style.justifyContent = "left";
 }
 
 async function mostrarTareas(dni_usuario) {
   // verifico que esté logueado antes de mostrar sus tareas
   if (localStorage.getItem("token")) {
-    contentUser.style.width = "90%";
-    panelTareas.style.width = "90%";
-    panelTareas.style.padding = "1rem";
-    panelTareas.classList.remove("is-hidden");
+    aplicaEstilos();
     //// Ésta es una iteración para eliminar todos los elementos, menos el 1º que es la fila cabecera
     while (contentTable.children.length > 1) {
       let item = contentTable.lastElementChild;
@@ -128,4 +147,63 @@ async function showUser(dni_usuario) {
 
   // Inserto userBlock con la nueva info, en su contenedor
   contentUser.appendChild(userBlock);
+}
+
+// Función para agregar nueva tarea usando la API
+/**
+ * Crear tarea
+ */
+async function crearTarea() {
+  const titulo = tituloText.value;
+  const descripcion = descripcionText.value;
+
+  const dni_usuario = localStorage.getItem("dni_usuario");
+
+  resetearErrores(tituloText, tituloHelp);
+
+  const response = await api(`/tareas/add/${dni_usuario}`, "post", {
+    titulo,
+    descripcion,
+  });
+
+  if (response.error) {
+    showFormErrors(response.error, "create");
+  } else {
+    createTaskForm.reset();
+    mostrarTareas(dni_usuario);
+  }
+}
+
+function resetearErrores(input, inputHelp) {
+  inputHelp.classList.add("is-hidden");
+  input.classList.remove("is-danger");
+}
+
+function showFormErrors(errors, action) {
+  if (action == "create") {
+    errors.forEach((error) => {
+      switch (error.field) {
+        case "titulo":
+          tituloHelp.innerText = error.msg;
+          tituloHelp.classList.remove("is-hidden");
+          tituloText.classList.add("is-danger");
+          break;
+        default:
+          break;
+      }
+    });
+  } else {
+    // action == "update"
+    errors.forEach((error) => {
+      switch (error.field) {
+        case "name":
+          tituloHelpUpd.innerText = error.msg;
+          tituloHelpUpd.classList.remove("is-hidden");
+          tituloTextUpd.classList.add("is-danger");
+          break;
+        default:
+          break;
+      }
+    });
+  }
 }

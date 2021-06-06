@@ -1,4 +1,5 @@
-// Falta incorporar validadores como middlewares
+const validarTitulo = require("../../validations/tarea/validarTitulo");
+const validateErrors = require("../../validations/validateErrors");
 
 const express = require("express");
 
@@ -21,9 +22,17 @@ tareasRouting.get(
 // // agregar tareas
 // //--  insert  en tabla tareas
 tareasRouting.post(
-  "/tareas/add",
+  "/tareas/add/:dni_usuario",
+  validarTitulo,
+  validateErrors,
   requestHandler(async (req, res) => {
-    const tarea = req.body.tarea;
+    const dni_usuario = req.params.dni_usuario;
+    const tarea = {
+      dni_usuario,
+      titulo: req.body.titulo,
+      descripcion: req.body.descripcion,
+    };
+
     const resul = await database.insertarTarea(tarea);
 
     res.json(resul);
