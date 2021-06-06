@@ -10,24 +10,19 @@ const userRow = document.getElementById("contentUserRow").content;
 // Referencia al panel de listado de tareas, para ocultar o mostrar dependiendo si está logueado o no
 const panelTareas = document.getElementById("panel_tareas");
 
-// Referencias a elementos del formulario para cargar nueva tarea
-const inputName = document.getElementById("userName");
-const inputAge = document.getElementById("userAge");
-
-const usrname = document.getElementById("usrname");
-const passwrd = document.getElementById("passwrd");
+// Cargar en esta parte Referencias a elementos del formulario para cargar nueva tarea
 
 // Referencia al formulario para cargar nueva tarea
-const createUserFormContent = document.getElementById("form-create");
-const createUserForm = document.getElementById("createUserForm");
+// const createUserFormContent = document.getElementById("form-create");
+// const createUserForm = document.getElementById("createUserForm");
 
 function addRow(titulo, estado, created, id_tarea) {
   // Clono el template en una nueva variable
   const fila = row.cloneNode(true);
   // Agrego dinámicamente los datos que vienen por parámetro
-  fila.querySelector(".txtName").innerText = titulo;
-  fila.querySelector(".nmbAge").innerText = estado;
-  fila.querySelector(".txtUsername").innerText = created;
+  fila.querySelector(".txtTitulo").innerText = titulo;
+  fila.querySelector(".txtEstado").innerText = estado;
+  fila.querySelector(".dateCreated").innerText = created;
   // Agrego botones para cada fila, y le doy funcionalidad con el addEventListener
   // !!!! Ojo !! hay que hacer las funciones para completar tarea y eliminar tarea
   fila
@@ -99,6 +94,7 @@ async function mostrarTareas(dni_usuario) {
   if (localStorage.getItem("token")) {
     contentUser.style.width = "90%";
     panelTareas.style.width = "90%";
+    panelTareas.style.padding = "1rem";
     panelTareas.classList.remove("is-hidden");
     //// Ésta es una iteración para eliminar todos los elementos, menos el 1º que es la fila cabecera
     while (contentTable.children.length > 1) {

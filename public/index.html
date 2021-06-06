@@ -58,15 +58,15 @@
       </nav>
     </div>
   
-    <nav class="panel p-3" id="contentUser"></nav>
+    <nav class="panel p-4" id="contentUser"></nav>
 
     <nav class="panel" id="panel_tareas">
       <p class="panel-heading">Listado de tareas para el usuario</p>
       <div class="panel-block is-flex-wrap-wrap" id="contentTable">
         <div class="columns w-1000">
-          <div class="column txtName">Titulo</div>
-          <div class="column nmbAge">Estado</div>
-          <div class="column txtUsername">Creada el</div>
+          <div class="column txtTitulo">Titulo</div>
+          <div class="column txtEstado">Estado</div>
+          <div class="column dateCreated">Creada el</div>
           <div class="column"></div>
         </div>
       </div>
@@ -74,11 +74,11 @@
 
     <template id="contentRow">
       <div class="columns row w-100">
-        <div class="column txtName pt-2"></div>
-        <div class="column nmbAge pt-2"></div>
-        <div class="column txtUsername pt-2"></div>
+        <div class="column txtTitulo pt-2"></div>
+        <div class="column txtEstado pt-2"></div>
+        <div class="column dateCreated pt-2"></div>
         <div class="column has-text-right">
-          <button class="button is-info mr-1 is-small btnUpdate">Editar</button>
+          <button class="button is-success mr-1 is-small btnUpdate">Hecha</button>
           <button class="button is-danger is-small btnDelete">Eliminar</button>
         </div>
       </div>
