@@ -1,0 +1,71 @@
+<!-- aca mostramos la tabla con los registros y con los estilos 
+info:https://ejs.co/  -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+  integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+<title>Grupo Nº 3</title>
+
+<body>
+  <ul class="list-group">
+    <a> <button onclick="myFunction()"> CERRAR SESIÓN </button></ars>
+      <a class="list-group-item list-group-item-primary" aria-current="page" href="/tareas">MIS TAREAS</a>
+      
+  </ul>
+
+  <table class="table table-dark table-bordered table-striped text-center mt-4">
+    <thead>
+      <tr class="bg-primary text-white">
+        <th scope="col">DNI</th>
+        <th scope="col">USUARIO</th>
+        <th scope="col">FECHA NAC.</th>
+        <th scope="col">DOMICILIO</th>
+        <th scope="col">LOCALIDAD</th>
+        <th scope="col">TELEFONO</th>
+        <th scope="col">USERNAME</th>
+        <th scope="col">PASS</th>
+        <th scope="col">EDITAR</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% results.forEach((usuarios)=>{ %>
+        <tr>
+          <td>
+            <%= usuarios.dni_usuario %>
+          </td>
+          <td>
+            <%= usuarios.nombre_apellido %>
+          </td>
+          <td>
+            <%= usuarios.fecha_nacimiento %>
+          </td>
+          <td>
+            <%= usuarios.domicilio %>
+          </td>
+          <td>
+            <%= usuarios.localidad %>
+          </td>
+          <td>
+            <%= usuarios.telefono %>
+          </td>
+          <td>
+            <%= usuarios.username %>
+          </td>
+          <td>
+            <%= usuarios.pass %>
+          </td>
+          <td>
+            <a href="/edit/<%= usuarios.dni_usuario %>" class="btn btn-outline-info">Editar<i class='bx bxs-edit'></i></a>
+            <a href="/delete/<%= usuarios.dni_usuario%>" class="btn btn-outline-danger">Eliminar<i>
+                <class='bx bxs-trash-alt'></i></a>
+          </td>
+        </tr>
+        <% }) %>
+    </tbody>
+    <script>
+      function myFunction() {
+        localStorage.clear();
+        window.location = "/";
+
+      }
+    </script>
+</body>
+</table>

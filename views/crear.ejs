@@ -1,0 +1,74 @@
+<!-- crear registros  -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+  <title>REGISTRAR USUARIO</title>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <nav class="navbar navbar-dark">
+      </nav>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/">Inicio</a>
+            <a class="nav-link active" aria-current="page" href="/listar">listar</a>
+          </li>
+         
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="container mt-4">
+    <div class="card border-secondary">
+      <div class="card-header">Nuevo Registro</div>
+      <div class="card-body">
+        <form action="/salvar" method="POST"><img src="../public/img/register.png">
+          <div class="mb-3">
+            <label for="user" class="form-label">Nº Documento</label>
+            <input type="text" class="form-control" id="user1" name="user" tabindex="1">
+            <label for="user" class="form-label">Nombre completo</label>
+            <input type="text" class="form-control" id="user2" name="user" tabindex="1">
+
+            <label for="user" class="form-label">Fecha de Nacimiento (xxxx-xx-xx)</label>
+            <input type="text" class="form-control" id="user3" name="user" tabindex="1">
+            <label for="user" class="form-label">Domicilio</label>
+            <input type="text" class="form-control" id="user4" name="user" tabindex="1">
+
+            <label for="user" class="form-label">Localidad</label>
+            <input type="text" class="form-control" id="user5" name="user" tabindex="1">
+
+            <label for="user" class="form-label">Telefono</label>
+            <input type="text" class="form-control" id="6" name="user" tabindex="1">
+
+            <label for="user" class="form-label">Nombre de usuario</label>
+            <input type="text" class="form-control" id="user7" name="user" tabindex="1">
+            <label for="user" class="form-label">Contraseña</label>
+            <input type="text" class="form-control" id="user8" name="user" tabindex="1">
+
+
+
+            <button type="submit" class="btn btn-primary" tabindex="5">Guardar</button>
+            <a href="/" class="btn btn-secondary">Cancelar</a>
+           
+        </form>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
