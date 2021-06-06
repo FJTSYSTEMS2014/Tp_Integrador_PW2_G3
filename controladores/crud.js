@@ -35,7 +35,7 @@ console.log(info);
 };
 
 
-// para guardar el metodo es salvar lo podemos ver en crear.ejs
+// para guardar el metodo es salvar lo podemos ver en crear_tarea.ejs
 exports.salvar_tarea=(req,res)=>{
   console.log("entro a salvar_tarea");
   // capturamos los campos de la tarea.
@@ -82,24 +82,25 @@ exports.verify=(req,res)=>{
    console.log(user+ " " );
    const username=user[0];
    const pass=user[1];
+
+if(username==undefined ||username==""|| pass==undefined||pass==""){
+  console.log('DATOS indDEFINIDOS');
+  res.render('404');
+  
+} else {
+
+
 // ACa tenemos los datos de usuario y contraseña DESDE EL LOGIN
 // FUNCION VERIFY
 // documentacion:https://www.npmjs.com/package/mysql2?activeTab=readme
 const resultado= conexion.execute(
   'SELECT `dni_usuario` FROM `usuarios` WHERE `username` = ? AND `pass` = ?',
   [username,pass],  function(err, resultado) {
-// el dni es:
-const dni=resultado[0].dni_usuario;
-console.log(`el dni es: ${dni}`);
+
+    const dni_usuario= resultado[0].dni_usuario;    }    );
+  res.redirect('/listar')
   }
-);
 };
-
-
-
-
-
-
 
 
 // actualizar ver edit.ejs y rutas

@@ -53,9 +53,11 @@ info:https://ejs.co/  -->
             <%= usuarios.pass %>
           </td>
           <td>
+            
             <a href="/edit/<%= usuarios.dni_usuario %>" class="btn btn-outline-info">Editar<i class='bx bxs-edit'></i></a>
             <a href="/delete/<%= usuarios.dni_usuario%>" class="btn btn-outline-danger">Eliminar<i>
                 <class='bx bxs-trash-alt'></i></a>
+                <a href="/add_tareas/<%= usuarios.dni_usuario %>" class="btn btn-outline-info">Nueva tarea<i class='bx bxs-edit'></i></a>
           </td>
         </tr>
         <% }) %>
