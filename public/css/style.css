@@ -80,8 +80,8 @@
 .form__button {
   display: block;
   justify-content: center;
-  margin-left: auto;
-  margin-top: 15px;
+  margin: 15px auto;
+  /* margin-top: 15px; */
   padding: 0.5rem 2rem;
   outline: none;
   border: none;
@@ -113,4 +113,26 @@
   font-size: var(--small-font-size);
   font-weight: 500;
   z-index: 10;
+}
+
+nav {
+  width: 90%;
+  margin: 20px auto;
+}
+.w-100,
+.w-1000 {
+  width: 100%;
+  margin: 0;
+}
+.w-100:nth-child(even) {
+  background: hsl(0, 0%, 93%);
+}
+.w-100:nth-child(odd) {
+  background: hsl(0, 0%, 98%);
+}
+.columns:last-child {
+  margin-bottom: 0;
+}
+.column {
+  padding: 0.5%;
 }

@@ -4,9 +4,9 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/public/css/bulma.min.css" />
+    <link rel="stylesheet" href="/css/bulma.min.css" />
     <script src="https://kit.fontawesome.com/2cfb16db7a.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="/public/css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
 
     <title>
       Trabajo práctico integrador - API para listar tareas por usuario
@@ -15,21 +15,17 @@
 
  
   <body onload="initApp();">
-    <nav>
-      
-    </nav>
-    <div class="l-form">
-     
-    <nav class="panel" id="login-form">
-      <h1 class="title mt-3 title">Lista de tareas - API para el IUPA</h1>
-      <p class="panel-heading">Login</p>
+    <div class="l-form" id="login-form">
+      <nav class="panel">
+        <h1 class="title mt-3">Lista de tareas - API para el IUPA</h1>
+        <p class="panel-heading">Login</p>
 
-      <div class="panel-block">
-        
+        <div class="panel-block">
+          <form>
           <div class="field">
             <!--<label class="label" for="user_name">Nombre de usuario: </label>-->
             <div class="control has-icons-left has-icons-right ">
-              <input class="input is-success userSpan" type="text" placeholder="Usuario" value="">
+              <input class="input is-success userSpan" id="user_name" type="text" placeholder="Usuario" value="">
               <span class="icon is-small is-left form__label">
                 <i class="fas fa-user"></i>
               </span>
@@ -40,7 +36,7 @@
             <!-- <p id="input_username_help" class="help is-hidden is-danger"></p> -->
             <!--<label class="label mt-4" for="password">Contraseña: </label>-->
             <div class="control has-icons-left has-icons-right">
-              <input class="input is-danger passSpan" type="password" placeholder="Contraseña" value="">
+              <input class="input is-danger passSpan" id="password" type="password" placeholder="Contraseña" value="">
               <span class="icon is-small is-left">
                 <i class="fas fa-key"></i>
               </span>
@@ -57,12 +53,11 @@
               Iniciar sesión
             </button>
           </div>
-      
-      </div>
-    </nav>
-
-  </div>
-
+          </form>
+        </div>
+      </nav>
+    </div>
+  
     <nav class="panel p-3" id="contentUser"></nav>
 
     <nav class="panel" id="panel_tareas">
