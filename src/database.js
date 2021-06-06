@@ -28,7 +28,7 @@ module.exports = {
   async obtenerTareaporDNI(dni_usuario) {
     let tareas = [];
     [tareas] = await connection.execute(
-      "SELECT * FROM tareas WHERE dni_usuario = ? AND eliminated IS NULL",
+      "SELECT * FROM tareas WHERE dni_usuario = ? AND estado <> 'eliminada'",
       [dni_usuario]
     );
 
@@ -101,10 +101,10 @@ module.exports = {
     }
 
     const fecha = obtenerFecha();
-    await connection.execute("UPDATE tareas SET eliminated = ? WHERE id = ?", [
-      fecha,
-      id,
-    ]);
+    await connection.execute(
+      "UPDATE tareas SET eliminated = ?, estado = 'eliminada' WHERE id = ?",
+      [fecha, id]
+    );
   },
   // Cambia estado de una tarea a completada
   async complete(id) {
