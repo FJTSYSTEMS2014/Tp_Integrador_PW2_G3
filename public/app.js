@@ -97,6 +97,8 @@ async function initApp() {
 async function mostrarTareas(dni_usuario) {
   // verifico que esté logueado antes de mostrar sus tareas
   if (localStorage.getItem("token")) {
+    contentUser.style.width = "90%";
+    panelTareas.style.width = "90%";
     panelTareas.classList.remove("is-hidden");
     //// Ésta es una iteración para eliminar todos los elementos, menos el 1º que es la fila cabecera
     while (contentTable.children.length > 1) {
