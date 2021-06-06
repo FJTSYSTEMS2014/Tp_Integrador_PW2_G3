@@ -61,7 +61,7 @@ rutas.get('/listar', (req, res, next) => {
             if(error){
                 throw error;
             } else {                       
-                res.render('crear_tareas.ejs',{dni_usuario});              
+                res.render('crear_tareas.ejs',{dni_usuario:dni_usuario});              
             }   
         }) });
 

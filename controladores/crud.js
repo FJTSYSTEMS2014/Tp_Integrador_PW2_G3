@@ -41,17 +41,20 @@ exports.salvar_tarea=(req,res)=>{
   // capturamos los campos de la tarea.
   // para invocar a estos valores los tenemos que configurar en rutas.js.
  const user= req.body.user;
-
+ const id= req.body.getID;
+ //const dni_usuario= 'DNI33.333.333'
+ /*
+ <%= dni_usuario  %>  */
  const sql = 'INSERT INTO tareas SET ?';
  const info = {
-   dni_usuario: user[0],
+  dni_usuario: user[0],
    titulo: user[1],
    descripcion: user[2],
    estado: user[3],
    created: user[4],
    updated: user[5],
    eliminated: user[6],
- }; /*
+ }; 
  conexion.query (sql, info, err => {
   if (err) {
     console.log (err);
@@ -61,8 +64,9 @@ exports.salvar_tarea=(req,res)=>{
     res.redirect('/')
 
   }
-});  */
-console.log(info);
+});  
+console.log(user);
+
 
 };
 
