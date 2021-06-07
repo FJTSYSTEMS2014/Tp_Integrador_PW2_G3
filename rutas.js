@@ -90,6 +90,7 @@ rutas.post('/salvar_tarea',crud.salvar_tarea);
  //actualizar usuarios
  rutas.post('/update',crud.update);
 
+ 
 
 // editar el archivos usuarios por dni (primary key)
     rutas.get ('/edit/:dni_usuario', (req, res) => {
@@ -104,6 +105,22 @@ rutas.post('/salvar_tarea',crud.salvar_tarea);
                 console.log(results);           
             }   
         }) });
+
+
+// editar el archivos tareas por dni (F key)
+rutas.get ('/edit_tareas/:dni_usuario', (req, res) => {
+    console.log('entro en /edit/:dni_usuario')
+    const dni_usuario=req.params.dni_usuario;   
+    console.log(dni_usuario)  ;
+    conexion.query('SELECT * FROM tareas WHERE dni_usuario=?' ,[dni_usuario],(error, results)=>{
+        if(error){
+            throw error;
+        } else {                       
+            res.render('edit_tareas', {user:results[0]}); 
+            console.log(results);           
+        }   
+    }) });
+
 
 
 

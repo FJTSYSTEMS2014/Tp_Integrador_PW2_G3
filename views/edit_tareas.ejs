@@ -33,9 +33,9 @@
   <% if (user) {%>
   <div class="container mt-4">
     <div class="card border-secondary">
-      <div class="card-header">EDITAR REGISTRO</div>
+      <div class="card-header">EDITAR TAREAS</div>
       <div class="card-body">
-        <form action="/update" method="POST"><img src="../public/img/edit.png">
+        <form action="/update_tareas" method="POST"><img src="../public/img/edit_tarea.png">
           <!-- capturar dni-->
             <input id="id" name="id" value="<%= user.dni_usuario %>" hidden>
           
@@ -43,24 +43,23 @@
             <label for="user" class="form-label">Nº Documento</label>
             <input type="text" class="form-control" id="user1"  name="user"  
             value="<%= user.dni_usuario %>"  tabindex="1">
-            <label for="user" class="form-label">Nombre completo</label>
-            <input type="text" class="form-control" id="user2" name="user" value="<%= user.nombre_apellido %>" tabindex="1">
+            <label for="user" class="form-label">Titulo</label>
+            <input type="text" class="form-control" id="user2" name="user" value="<%= user.titulo %>" tabindex="1">
 
-            <label for="user" class="form-label">Fecha de Nacimiento (xxxx-xx-xx)</label>
-            <input type="text" class="form-control" id="user3" name="user" value="<%= user.fecha_nacimiento%>" tabindex="1">
-            <label for="user" class="form-label">Domicilio</label>
-            <input type="text" class="form-control" id="user4" name="user"  value="<%= user.domicilio %>" tabindex="1">
+            <label for="user" class="form-label">Descripción</label>
+            <input type="text" class="form-control" id="user3" name="user" value="<%= user.descripcion%>" tabindex="1">
+            <label for="user" class="form-label">Estado</label>
+            <input type="text" class="form-control" id="user4" name="user"  value="<%= user.estado%>" tabindex="1">
 
-            <label for="user" class="form-label">Localidad</label>
-            <input type="text" class="form-control" id="user5" name="user"  value="<%= user.localidad %>" tabindex="1">
+            <label for="user" class="form-label">Creado</label>
+            <input type="text" class="form-control" id="user5" name="user"  value="<%= user.created %>" tabindex="1">
 
-            <label for="user" class="form-label">Telefono</label>
-            <input type="text" class="form-control" id="6" name="user" value="<%= user.telefono%>" tabindex="1">
+            <label for="user" class="form-label">Actualizado</label>
+            <input type="text" class="form-control" id="6" name="user" value="<%= user.updated%>" tabindex="1">
 
-            <label for="user" class="form-label">Nombre de usuario</label>
-            <input type="text" class="form-control" id="user7" name="user" value="<%= user.username %>"  tabindex="1">
-            <label for="user" class="form-label">Contraseña</label>
-            <input type="text" class="form-control" id="user8" name="user" value="<%= user.pass %>" tabindex="1">
+            <label for="user" class="form-label">Eliminado</label>
+            <input type="text" class="form-control" id="user7" name="user" value="<%= user.eliminated %>"  tabindex="1">
+           
 
             <button type="submit" class="btn btn-primary" tabindex="5">Guardar</button>
             <a href="/" class="btn btn-secondary">Cancelar</a>
