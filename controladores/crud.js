@@ -26,7 +26,7 @@ exports.salvar=(req,res)=>{
      
     } else {
       console.log (' usuario agregado');
-      res.redirect('/')
+      res.redirect('/listar')
 
     }
   });
@@ -61,7 +61,7 @@ exports.salvar_tarea=(req,res)=>{
    
   } else {
     console.log (' tarea agregada');
-    res.redirect('/')
+    res.redirect('/tareas')
 
   }
 });  
