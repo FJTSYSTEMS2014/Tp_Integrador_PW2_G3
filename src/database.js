@@ -12,7 +12,7 @@ function obtenerFecha() {
   const fecha_actual = new Date();
 
   const dia = fecha_actual.getDate();
-  const mes = fecha_actual.getMonth();
+  const mes = fecha_actual.getMonth() + 1;
   const anio = fecha_actual.getFullYear();
   const fecha_completa = anio + "-" + mes + "-" + dia;
 
@@ -114,7 +114,6 @@ module.exports = {
       throw new Error(`No existe una tarea con id "${id}`);
     }
 
-    console.log("Llegue");
     await connection.execute(
       "UPDATE tareas SET estado = 'completada' WHERE id = ?",
       [id]

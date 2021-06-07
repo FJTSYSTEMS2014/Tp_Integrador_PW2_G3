@@ -31,15 +31,25 @@ function addRow(titulo, estado, created, id_tarea) {
   // Agrego dinámicamente los datos que vienen por parámetro
   fila.querySelector(".txtTitulo").innerText = titulo;
   fila.querySelector(".txtEstado").innerText = estado;
-  fila.querySelector(".dateCreated").innerText = created;
+  let creado = created.substring(0, 10);
+  let creado_aux = creado;
+  creado_aux =
+    creado.substring(8, 10) +
+    "-" +
+    creado.substring(5, 8) +
+    creado.substring(0, 4);
+  fila.querySelector(".dateCreated").innerText = creado_aux;
   // Agrego botones para cada fila, y le doy funcionalidad con el addEventListener
-  // !!!! Ojo !! hay que hacer las funciones para completar tarea y eliminar tarea
   fila
     .querySelector(".btnDelete")
     .addEventListener("click", () => eliminarTarea(id_tarea));
-  fila
-    .querySelector(".btnUpdate")
-    .addEventListener("click", () => completarTarea(id_tarea));
+  if (estado == "pendiente") {
+    fila
+      .querySelector(".btnUpdate")
+      .addEventListener("click", () => completarTarea(id_tarea));
+  } else {
+    fila.querySelector(".btnUpdate").style.display = "none";
+  }
   // Acá hacemos lo que hizo Juan en una clase, de agregar un dataset para tener el id de cada una
   fila.querySelector(".row").dataset.id = id_tarea;
 
@@ -104,9 +114,11 @@ function aplicaEstilos() {
   contentUser.style.width = "90%";
   panelTareas.style.width = "90%";
   panelTareas.style.padding = "1rem";
+  panelTareas.children[0].style.marginBottom = "2rem";
   panelTareas.classList.remove("is-hidden");
   createTaskFormContent.style.width = "90%";
   createTaskFormContent.style.padding = "1rem";
+  createTaskFormContent.children[0].style.marginBottom = "2rem";
   createTaskFormContent.children[1].style.justifyContent = "left";
 }
 
