@@ -26,7 +26,7 @@ exports.salvar=(req,res)=>{
      
     } else {
       console.log (' usuario agregado');
-      res.redirect('/listar')
+      res.redirect('/')
 
     }
   });
