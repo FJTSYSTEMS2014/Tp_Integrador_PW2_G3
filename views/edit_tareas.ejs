@@ -40,29 +40,21 @@
             <input id="id" name="id" value="<%= user.dni_usuario %>" hidden>
           
             <div class="mb-3">
-            <label for="user" class="form-label">Nº Documento</label>
-            <input type="text" class="form-control" id="user1"  name="user"  
-            value="<%= user.dni_usuario %>"  tabindex="1">
+              <label for="user" class="form-label">ID</label>
+              <input type="text" class="form-control" id="user1"  name="user"  
+              value="<%= user.id %>"  tabindex="1" hidden>
             <label for="user" class="form-label">Titulo</label>
             <input type="text" class="form-control" id="user2" name="user" value="<%= user.titulo %>" tabindex="1">
 
             <label for="user" class="form-label">Descripción</label>
             <input type="text" class="form-control" id="user3" name="user" value="<%= user.descripcion%>" tabindex="1">
-            <label for="user" class="form-label">Estado</label>
+            <label for="user" class="form-label">Estado ('pendiente','completada','eliminada')</label>
             <input type="text" class="form-control" id="user4" name="user"  value="<%= user.estado%>" tabindex="1">
 
-            <label for="user" class="form-label">Creado</label>
-            <input type="text" class="form-control" id="user5" name="user"  value="<%= user.created %>" tabindex="1">
-
-            <label for="user" class="form-label">Actualizado</label>
-            <input type="text" class="form-control" id="6" name="user" value="<%= user.updated%>" tabindex="1">
-
-            <label for="user" class="form-label">Eliminado</label>
-            <input type="text" class="form-control" id="user7" name="user" value="<%= user.eliminated %>"  tabindex="1">
            
 
             <button type="submit" class="btn btn-primary" tabindex="5">Guardar</button>
-            <a href="/" class="btn btn-secondary">Cancelar</a>
+            <a href="/tareas" class="btn btn-secondary">Cancelar</a>
            
         </form>
       </div>

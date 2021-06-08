@@ -58,6 +58,7 @@ info:https://ejs.co/  -->
             <a href="/delete/<%= usuarios.dni_usuario%>" class="btn btn-outline-danger">Eliminar<i>
                 <class='bx bxs-trash-alt'></i></a>
                 <a href="/add_tareas/<%= usuarios.dni_usuario %>" class="btn btn-outline-info">Nueva tarea<i class='bx bxs-edit'></i></a>
+                <a href="/view_tareas/<%= usuarios.dni_usuario %>" class="btn btn-outline-info">Todas las tareas del usuario por DNI<i class='bx bxs-edit'></i></a>
           </td>
         </tr>
         <% }) %>
