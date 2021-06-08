@@ -41,15 +41,17 @@ exports.salvar_tarea = (req, res) => {
   //const dni_usuario= 'DNI33.333.333'
   /*
  <%= dni_usuario  %>  */
+  const today = new Date ();
+  const today1 = today.toISOString ();
+  const created = today1.substring (0, 10);
+
   const sql = 'INSERT INTO tareas SET ?';
   const info = {
     dni_usuario: user[0],
     titulo: user[1],
     descripcion: user[2],
     estado: user[3],
-    created: user[4],
-    updated: user[5],
-    eliminated: user[6],
+    created,
   };
   conexion.query (sql, info, err => {
     if (err) {
@@ -61,8 +63,6 @@ exports.salvar_tarea = (req, res) => {
   });
   console.log (user);
 };
-
-
 
 // para guardar el metodo es salvar lo podemos ver en index.ejs
 
@@ -106,23 +106,29 @@ exports.update = (req, res) => {
   const usuario = req.body.user;
   const dni_usuario = usuario[0];
   const nombre_apellido_ = usuario[1];
-  const fecha_nacimiento0 = usuario[2]; 
+  const fecha_nacimiento0 = usuario[2];
   const today = new Date (fecha_nacimiento0);
   //console.log (today.toISOString ()); // info que mando EDU por chat 2021-06-07T03:00:00.000Z
-  const fecha_nacimiento3=today.toISOString ();
-const fecha_nacimiento = fecha_nacimiento3.substring(0, 10);
-const domicilio = usuario[3]; 
-const localidad = usuario[4]; 
-const telefono = usuario[5]; 
-const username=usuario[6];
-const pass=usuario[7];
-// fuunciona ok  
+  const fecha_nacimiento3 = today.toISOString ();
+  const fecha_nacimiento = fecha_nacimiento3.substring (0, 10);
+  const domicilio = usuario[3];
+  const localidad = usuario[4];
+  const telefono = usuario[5];
+  const username = usuario[6];
+  const pass = usuario[7];
+  // fuunciona ok
 
-/*     'UPDATE `usuarios` SET nombre_apellido= ? ,fecha_nacimiento=?, domicilio= ? WHERE `dni_usuario` = ? ',
+  /*     'UPDATE `usuarios` SET nombre_apellido= ? ,fecha_nacimiento=?, domicilio= ? WHERE `dni_usuario` = ? ',
     [nombre_apellido_,fecha_nacimiento,domicilio, dni_usuario], */
   conexion.query (
     'UPDATE `usuarios` SET dni_usuario =?, nombre_apellido= ? ,fecha_nacimiento=?, domicilio= ? WHERE `dni_usuario` = ? ',
-    [dni_usuario,nombre_apellido_,fecha_nacimiento,domicilio, dni_usuario_old],
+    [
+      dni_usuario,
+      nombre_apellido_,
+      fecha_nacimiento,
+      domicilio,
+      dni_usuario_old,
+    ],
     (error, results) => {
       if (error) {
         console.log (error);
@@ -137,14 +143,31 @@ const pass=usuario[7];
 
 // actualizar ver edit.ejs y rutas
 exports.update_tareas = (req, res) => {
-  // capturo el dni old
-  const id = req.body.id;
-  // en user vendria con el dni nuevo
+  // capturo el id de la tareas
+  // const id = req.body.id;
+  // en usuario vienen los datos
   const usuario = req.body.user;
+  const id = usuario[0];
+  const titulo = usuario[1];
+  const descripcion = usuario[2];
+  const estado = usuario[3];
+  const today = new Date ();
+  const today1 = today.toISOString ();
+  const updated = today1.substring (0, 10);
 
-  console.log (usuario);
-  res.redirect('/listar');
+  //console.log(`${id}, ${titulo},${descripcion},${estado},${updated}`)
 
+  conexion.query (
+    'UPDATE `tareas` SET titulo =?, descripcion= ? ,estado=?,updated=? WHERE `id` = ? ',
+    [titulo, descripcion, estado, updated, id],
+    (error, results) => {
+      if (error) {
+        console.log (error);
+      } else {
+        res.redirect ('/tareas');
+      }
+    }
+  );
 };
 
 // verificar token

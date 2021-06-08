@@ -83,7 +83,6 @@ rutas.post ('/update_tareas', crud.update_tareas);
 
 // editar el archivos usuarios por dni (primary key)
 rutas.get ('/edit/:dni_usuario', (req, res) => {
-
   const dni_usuario = req.params.dni_usuario;
 
   conexion.query (
@@ -104,18 +103,13 @@ rutas.get ('/edit_tareas/:id', (req, res) => {
   console.log ('entro en /edit_tareas/:dni_usuario');
   const id = req.params.id;
 
-  conexion.query (
-    'SELECT * FROM tareas WHERE id=?',
-    [id],
-    (error, results) => {
-      if (error) {
-        console.log (error);
-      } else {
-       
-        res.render ('edit_tareas', {user: results[0]});
-      }
+  conexion.query ('SELECT * FROM tareas WHERE id=?', [id], (error, results) => {
+    if (error) {
+      console.log (error);
+    } else {
+      res.render ('edit_tareas', {user: results[0]});
     }
-  );
+  });
 });
 
 // elimninar usuarios ver: el delete de usuarios.ejs
@@ -128,7 +122,7 @@ rutas.get ('/delete/:dni_usuario', (req, res) => {
     [dni_usuario],
     (error, results) => {
       if (error) {
-        console.log(error);
+        console.log (error);
       } else {
         res.redirect ('/listar');
       }
@@ -140,7 +134,7 @@ rutas.get ('/delete/:dni_usuario', (req, res) => {
 rutas.get ('/add/:dni_usuario', (req, res) => {
   conexion.query ('SELECT * FROM tareas', (error, results) => {
     if (error) {
-        console.log(error);
+      console.log (error);
     } else {
       res.render ('crear_tareas.ejs');
     }

@@ -25,45 +25,45 @@
             <a class="nav-link active" aria-current="page" href="/">Inicio</a>
             <a class="nav-link active" aria-current="page" href="/listar">listar</a>
           </li>
-         
+
         </ul>
       </div>
     </div>
   </nav>
   <% if (user) {%>
-  <div class="container mt-4">
-    <div class="card border-secondary">
-      <div class="card-header">EDITAR TAREAS</div>
-      <div class="card-body">
-        <form action="/update_tareas" method="POST"><img src="../public/img/edit_tarea.png">
-          <!-- capturar dni-->
+    <div class="container mt-4">
+      <div class="card border-secondary">
+        <div class="card-header">EDITAR TAREAS</div>
+        <div class="card-body">
+          <form action="/update_tareas" method="POST"><img src="../public/img/edit_tarea.png">
+            <!-- capturar dni-->
             <input id="id" name="id" value="<%= user.dni_usuario %>" hidden>
-          
+
             <div class="mb-3">
               <label for="user" class="form-label">ID</label>
-              <input type="text" class="form-control" id="user1"  name="user"  
-              value="<%= user.id %>"  tabindex="1" hidden>
-            <label for="user" class="form-label">Titulo</label>
-            <input type="text" class="form-control" id="user2" name="user" value="<%= user.titulo %>" tabindex="1">
+              <input type="text" class="form-control" id="user1" name="user" value="<%= user.id %>" tabindex="1" hidden>
+              <label for="user" class="form-label">Titulo</label>
+              <input type="text" class="form-control" id="user2" name="user" value="<%= user.titulo %>" tabindex="1">
 
-            <label for="user" class="form-label">Descripción</label>
-            <input type="text" class="form-control" id="user3" name="user" value="<%= user.descripcion%>" tabindex="1">
-            <label for="user" class="form-label">Estado ('pendiente','completada','eliminada')</label>
-            <input type="text" class="form-control" id="user4" name="user"  value="<%= user.estado%>" tabindex="1">
+              <label for="user" class="form-label">Descripción</label>
+              <input type="text" class="form-control" id="user3" name="user" value="<%= user.descripcion%>"
+                tabindex="1">
+              <label for="user" class="form-label">Estado ('pendiente','completada','eliminada')</label>
+              <input type="text" class="form-control" id="user4" name="user" value="<%= user.estado%>" tabindex="1">
 
-           
 
-            <button type="submit" class="btn btn-primary" tabindex="5">Guardar</button>
-            <a href="/tareas" class="btn btn-secondary">Cancelar</a>
-           
-        </form>
+
+              <button type="submit" class="btn btn-primary" tabindex="5">Guardar</button>
+              <a href="/tareas" class="btn btn-secondary">Cancelar</a>
+
+          </form>
+        </div>
       </div>
     </div>
-  </div>
-  <%}%>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
-    crossorigin="anonymous"></script>
+    <%}%>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

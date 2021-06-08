@@ -25,7 +25,7 @@
             <a class="nav-link active" aria-current="page" href="/">Inicio</a>
             <a class="nav-link active" aria-current="page" href="/listar">listar</a>
           </li>
-         
+
         </ul>
       </div>
     </div>
@@ -37,22 +37,23 @@
       <div class="card-body">
         <form action="/salvar_tarea" method="POST"><img src="../public/img/tareas.png">
 
-           
+
           <div class="mb-3">
             <label for="user" class="form-label">DNI</label>
-            <input type="text" class="form-control" id="user1" name="user" value="<%=dni_usuario%>"  tabindex="1" enabled>
-        
+            <input type="text" class="form-control" id="user1" name="user" value="<%=dni_usuario%>" tabindex="1"
+              enabled>
+
             <label for="user" class="form-label">TITULO</label>
             <input type="text" class="form-control" id="user2" name="user" value=" MI TITULO" tabindex="1">
             <label for="user" class="form-label">DESCRIPCIÓN</label>
-            <input type="text" class="form-control" id="user3" name="user" value=" MI DESCRIPCION"  tabindex="1">
+            <input type="text" class="form-control" id="user3" name="user" value=" MI DESCRIPCION" tabindex="1">
 
             <label for="user" class="form-label">ESTADO ('pendiente','completada','eliminada') </label>
-            <input type="text" class="form-control" id="user4" name="user" value="pendiente"  tabindex="1">
+            <input type="text" class="form-control" id="user4" name="user" value="pendiente" tabindex="1">
 
             <button type="submit" class="btn btn-primary" tabindex="5">Guardar</button>
-            <a href="/" class="btn btn-secondary">Cancelar</a>
-           
+            <a href="/tareas" class="btn btn-secondary">Cancelar</a>
+
         </form>
       </div>
     </div>
