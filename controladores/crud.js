@@ -121,12 +121,14 @@ exports.update = (req, res) => {
   /*     'UPDATE `usuarios` SET nombre_apellido= ? ,fecha_nacimiento=?, domicilio= ? WHERE `dni_usuario` = ? ',
     [nombre_apellido_,fecha_nacimiento,domicilio, dni_usuario], */
   conexion.query (
-    'UPDATE `usuarios` SET dni_usuario =?, nombre_apellido= ? ,fecha_nacimiento=?, domicilio= ? WHERE `dni_usuario` = ? ',
+    'UPDATE `usuarios` SET dni_usuario =?, nombre_apellido= ? ,fecha_nacimiento=?, domicilio= ? , localidad= ?, telefono= ?, username= ?, pass= ? WHERE `dni_usuario` = ? ',
     [
       dni_usuario,
       nombre_apellido_,
       fecha_nacimiento,
       domicilio,
+      localidad,
+      telefono,username,pass,
       dni_usuario_old,
     ],
     (error, results) => {
