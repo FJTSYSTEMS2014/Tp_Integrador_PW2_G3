@@ -102,7 +102,7 @@ module.exports = {
 
     const fecha = obtenerFecha();
     await connection.execute(
-      "UPDATE tareas SET eliminated = ?, estado = 'eliminada' WHERE id = ?",
+      "UPDATE tareas SET estado = 'eliminada', eliminated = ? WHERE id = ?",
       [fecha, id]
     );
   },
@@ -114,9 +114,11 @@ module.exports = {
       throw new Error(`No existe una tarea con id "${id}`);
     }
 
+    const fecha = obtenerFecha();
+
     await connection.execute(
-      "UPDATE tareas SET estado = 'completada' WHERE id = ?",
-      [id]
+      "UPDATE tareas SET estado = 'completada', updated = ? WHERE id = ?",
+      [fecha, id]
     );
   },
 };
