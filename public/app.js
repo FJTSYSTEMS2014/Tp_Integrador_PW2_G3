@@ -25,7 +25,7 @@ const createTaskForm = document.getElementById("createTaskForm");
 const btnCreate = document.getElementById("createButton");
 btnCreate.addEventListener("click", () => crearTarea());
 
-function addRow(titulo, estado, created, id_tarea) {
+function addRow(titulo, estado, created, updated, id_tarea) {
   // Clono el template en una nueva variable
   const fila = row.cloneNode(true);
   // Agrego dinámicamente los datos que vienen por parámetro
@@ -39,6 +39,14 @@ function addRow(titulo, estado, created, id_tarea) {
     creado.substring(5, 8) +
     creado.substring(0, 4);
   fila.querySelector(".dateCreated").innerText = creado_aux;
+  let actualizado = updated.substring(0, 10);
+  let actualizado_aux = actualizado;
+  actualizado_aux =
+    actualizado.substring(8, 10) +
+    "-" +
+    actualizado.substring(5, 8) +
+    actualizado.substring(0, 4);
+  fila.querySelector(".dateUpdated").innerText = actualizado_aux;
   // Agrego botones para cada fila, y le doy funcionalidad con el addEventListener
   fila
     .querySelector(".btnDelete")
@@ -135,8 +143,8 @@ async function mostrarTareas(dni_usuario) {
     // obtengo tareas usando la api
     const data = await api(`/tareas/${dni_usuario}`, "get");
     // para cada fila de tareas, uso el template llamando a la función addRow
-    data.forEach(({ titulo, estado, created, id }) =>
-      addRow(titulo, estado, created, id)
+    data.forEach(({ titulo, estado, created, updated, id }) =>
+      addRow(titulo, estado, created, updated, id)
     );
   }
 }
