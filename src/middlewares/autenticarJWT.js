@@ -10,7 +10,9 @@ const autenticarJWT = (req, res, next) => {
 
     jwt.verify(jswtoken, JWT_SECRET, (err, session) => {
       if (err) {
-        res.sendStatus(403);
+        res.status(403).json({
+          mensaje: "Error: La sesión ha caducado",
+        });
       }
 
       req.session = session;

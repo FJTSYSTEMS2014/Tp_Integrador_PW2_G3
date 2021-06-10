@@ -100,6 +100,8 @@ async function api(endpoint, method, body = undefined) {
 
 // Aquí inicia la App
 async function initApp() {
+  // el panel central no lo muestro hasta estar seguro que tiene tareas asociadas
+  panelTareas.classList.add("is-hidden");
   if (localStorage.getItem("token")) {
     // Si hay token (ojo, puede estar vencido, controlar eso) entonces
     // capturo dni de usuario para mostrar sus datos y sus tareas
@@ -112,7 +114,7 @@ async function initApp() {
   } else {
     // Usuario no logueado, oculto el contenedor que muestra bienvenida al usuario y botón de logout
     contentUser.style.display = "none";
-    panelTareas.classList.add("is-hidden");
+
     // oculto formulario para cargar nueva tarea
     createTaskFormContent.style.display = "none";
   }
@@ -123,7 +125,6 @@ function aplicaEstilos() {
   panelTareas.style.width = "90%";
   panelTareas.style.padding = "1rem";
   panelTareas.children[0].style.marginBottom = "2rem";
-  panelTareas.classList.remove("is-hidden");
   createTaskFormContent.style.width = "90%";
   createTaskFormContent.style.padding = "1rem";
   createTaskFormContent.children[0].style.marginBottom = "2rem";
@@ -135,17 +136,23 @@ async function mostrarTareas(dni_usuario) {
   if (localStorage.getItem("token")) {
     aplicaEstilos();
     createTaskFormContent.style.display = ""; // Muestro formulario de carga de nueva tarea
-    //// Ésta es una iteración para eliminar todos los elementos, menos el 1º que es la fila cabecera
-    while (contentTable.children.length > 1) {
-      let item = contentTable.lastElementChild;
-      contentTable.removeChild(item);
-    }
+
     // obtengo tareas usando la api
     const data = await api(`/tareas/${dni_usuario}`, "get");
-    // para cada fila de tareas, uso el template llamando a la función addRow
-    data.forEach(({ titulo, estado, created, updated, id }) =>
-      addRow(titulo, estado, created, updated, id)
-    );
+    // Si hay por lo menos una tarea para mostrar, muestro el panel central
+    if (data.length > 0) {
+      panelTareas.classList.remove("is-hidden");
+
+      //// Ésta es una iteración para eliminar todos los elementos, menos el 1º que es la fila cabecera
+      while (contentTable.children.length > 1) {
+        let item = contentTable.lastElementChild;
+        contentTable.removeChild(item);
+      }
+      // para cada fila de tareas, uso el template llamando a la función addRow
+      data.forEach(({ titulo, estado, created, updated, id }) =>
+        addRow(titulo, estado, created, updated, id)
+      );
+    }
   }
 }
 
@@ -202,6 +209,13 @@ async function eliminarTarea(id) {
 
     const filaTarea = document.querySelector(`[data-id='${id}']`);
     filaTarea.remove();
+
+    const dni_usuario = localStorage.getItem("dni_usuario");
+    const tareas = await api(`/tareas/${dni_usuario}`, "get");
+    // Si después de eliminar la tarea ya no hay más para mostrar, oculto el panel central
+    if (tareas.length == 0) {
+      panelTareas.classList.add("is-hidden");
+    }
   }
 }
 

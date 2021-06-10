@@ -27,7 +27,7 @@ const authenticateJWT = (req, res, next) => {
         });
       } else {
         req.session = {
-          mensaje: " Iniciaste sesion correctamente (solo por 120 segundos)",
+          mensaje: " Iniciaste sesion correctamente (solo por 30 minutos)",
           authData,
         };
         next();
