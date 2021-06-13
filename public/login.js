@@ -31,12 +31,12 @@ async function login() {
   } else {
     // si el usuario fue encontrado, almacenamos el token en localStorage
     localStorage.setItem("token", response.accessToken);
-    localStorage.setItem("dni_usuario", response.dni_usuario);
+
     // Usuario logueado
     contentUser.style.display = ""; // Muestro nuevamente el contenedor que oculté en initApp
-    showUser(response.dni_usuario); // Llamo a showUser() y le paso el dni para que cargue sus datos en el template
+    showUser(); // Llamo a showUser() para que cargue datos de usuario en el template
 
-    mostrarTareas(response.dni_usuario);
+    mostrarTareas();
     updateLoginStatus();
   }
 }

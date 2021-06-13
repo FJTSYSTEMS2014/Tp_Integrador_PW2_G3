@@ -14,22 +14,41 @@ const panelTareas = document.getElementById("panel_tareas");
 const tituloText = document.getElementById("titulo");
 const descripcionText = document.getElementById("descripcion");
 
+// Referencias a elementos del formulario para editar una tarea
+const tituloUpd = document.getElementById("tituloUpd");
+const descripcionUpd = document.getElementById("descripcionUpd");
+
 // En estos elementos es donde se mostrarán los errores para nueva tarea y editar tarea
 const tituloHelp = document.getElementById("inputTituloHelp");
+const inputTituloUpdHelp = document.getElementById("inputTituloUpdHelp");
 
 // Referencia al formulario para cargar nueva tarea
 const createTaskFormContent = document.getElementById("form-create");
 const createTaskForm = document.getElementById("createTaskForm");
 
+// Referencia al formulario para modificar tarea existente
+const updateTaskFormContent = document.getElementById("form-update");
+const updateTaskForm = document.getElementById("updateTaskForm");
+
 // Referencia al botón de crear tarea y funcionalidad para llamar a función crearTarea()
 const btnCreate = document.getElementById("createButton");
 btnCreate.addEventListener("click", () => crearTarea());
+
+// agrego el handler addeventlistener al botón de guardar tarea editada
+const btnSaveTask = document.getElementById("saveTask");
+btnSaveTask.addEventListener("click", () => saveUpdateTask());
 
 function addRow(titulo, estado, created, updated, id_tarea) {
   // Clono el template en una nueva variable
   const fila = row.cloneNode(true);
   // Agrego dinámicamente los datos que vienen por parámetro
-  fila.querySelector(".txtTitulo").innerText = titulo;
+  fila.querySelector(".txtTitulo").innerHTML =
+    "<a class='is-underlined' href='#' >" + titulo + "</a>";
+
+  fila
+    .querySelector(".is-underlined")
+    .addEventListener("click", () => editarTarea(id_tarea));
+
   fila.querySelector(".txtEstado").innerText = estado;
   let creado = created.substring(0, 10);
   let creado_aux = creado;
@@ -68,7 +87,7 @@ function addRow(titulo, estado, created, updated, id_tarea) {
 /**
  *
  * @param {'get'|'post'|'put'|'delete'} method
- * @param {'/tareas'|'/tareas/:dni_usuario'|'/usuarios'|'/usuarios/:dni_usuario'} endpoint
+ * @param {'/tareas'|'/tareas/add'|'/tareas/obtener'|'/tareas/edit'|'/tareas/done'|'/usuarios'} endpoint
  * @returns
  */
 
@@ -103,14 +122,8 @@ async function initApp() {
   // el panel central no lo muestro hasta estar seguro que tiene tareas asociadas
   panelTareas.classList.add("is-hidden");
   if (localStorage.getItem("token")) {
-    // Si hay token (ojo, puede estar vencido, controlar eso) entonces
-    // capturo dni de usuario para mostrar sus datos y sus tareas
-    const dni = localStorage.getItem("dni_usuario");
-
-    // !!!!! Ojo! el dni de usuario lo tenemos que obtener directamente del token, cambiar esto
-
-    showUser(dni); // Muestra datos del usuario en el panel superior
-    await mostrarTareas(dni); // Muestra tareas del usuario en el panel central
+    showUser(); // Muestra datos del usuario en el panel superior
+    await mostrarTareas(); // Muestra tareas del usuario en el panel central
   } else {
     // Usuario no logueado, oculto el contenedor que muestra bienvenida al usuario y botón de logout
     contentUser.style.display = "none";
@@ -121,24 +134,28 @@ async function initApp() {
 }
 
 function aplicaEstilos() {
-  contentUser.style.width = "90%";
-  panelTareas.style.width = "90%";
+  contentUser.style.width = "95%";
+  panelTareas.style.width = "95%";
   panelTareas.style.padding = "1rem";
   panelTareas.children[0].style.marginBottom = "2rem";
-  createTaskFormContent.style.width = "90%";
+  createTaskFormContent.style.width = "95%";
   createTaskFormContent.style.padding = "1rem";
   createTaskFormContent.children[0].style.marginBottom = "2rem";
   createTaskFormContent.children[1].style.justifyContent = "left";
+  updateTaskFormContent.style.width = "95%";
+  updateTaskFormContent.style.padding = "1rem";
+  updateTaskFormContent.children[0].style.marginBottom = "2rem";
+  updateTaskFormContent.children[1].style.justifyContent = "left";
 }
 
-async function mostrarTareas(dni_usuario) {
+async function mostrarTareas() {
   // verifico que esté logueado antes de mostrar sus tareas
   if (localStorage.getItem("token")) {
     aplicaEstilos();
     createTaskFormContent.style.display = ""; // Muestro formulario de carga de nueva tarea
 
     // obtengo tareas usando la api
-    const data = await api(`/tareas/${dni_usuario}`, "get");
+    const data = await api(`/tareas/`, "get");
     // Si hay por lo menos una tarea para mostrar, muestro el panel central
     if (data.length > 0) {
       panelTareas.classList.remove("is-hidden");
@@ -157,9 +174,18 @@ async function mostrarTareas(dni_usuario) {
 }
 
 // Función para mostrar información del usuario en el panel superior, una vez que hizo login
-async function showUser(dni_usuario) {
+async function showUser() {
   // Obtengo datos usando la api
-  const user = await api(`/usuarios/${dni_usuario}`, "get");
+  const user = await api(`/usuarios/`, "get");
+
+  // Debido a que aquí es el primer llamado a la api, al tener la respuesta del validador de token en esta instancia, verificamos que el token no esté vencido
+  // En caso de estar caducado, se redirige al usuario a la pantalla de login
+  if (user.error) {
+    if (user.error === 403) {
+      localStorage.removeItem("token");
+      document.location.href = "/";
+    }
+  }
 
   // Clono el template en una nueva variable
   const userBlock = userRow.cloneNode(true);
@@ -183,11 +209,9 @@ async function crearTarea() {
   const titulo = tituloText.value;
   const descripcion = descripcionText.value;
 
-  const dni_usuario = localStorage.getItem("dni_usuario");
-
   resetearErrores(tituloText, tituloHelp);
 
-  const response = await api(`/tareas/add/${dni_usuario}`, "post", {
+  const response = await api(`/tareas/add/`, "post", {
     titulo,
     descripcion,
   });
@@ -196,7 +220,59 @@ async function crearTarea() {
     showFormErrors(response.error, "create");
   } else {
     createTaskForm.reset();
-    mostrarTareas(dni_usuario);
+    mostrarTareas();
+  }
+}
+
+/**
+ * Editar tarea
+ */
+async function editarTarea(id) {
+  // antes de hacer nada, obtengo la tarea para ver si ya está completada
+  const task = await api(`/tareas/obtener/${id}`, "get");
+
+  if (task.estado == "completada") {
+    alert(
+      "La tarea seleccionada no puede ser modificada porque está completada"
+    );
+  } else {
+    mostrarTareas();
+    resetearErrores(tituloUpd, inputTituloUpdHelp);
+    // oculto el form de crear nueva tarea y muestro el de edición
+    createTaskFormContent.style.display = "none";
+    updateTaskFormContent.style.display = "";
+    // agrego la info que viene desde la api a los elementos del formulario
+    updateTaskFormContent.querySelector("#tarea-id").innerText = id;
+    updateTaskForm.querySelector("#tituloUpd").value = task.titulo;
+    updateTaskForm.querySelector("#descripcionUpd").value = task.descripcion;
+  }
+}
+
+function cancelarUpdate() {
+  resetearErrores(tituloText, tituloHelp);
+
+  createTaskFormContent.style.display = "";
+  updateTaskFormContent.style.display = "none";
+}
+
+async function saveUpdateTask() {
+  resetearErrores(tituloUpd, inputTituloUpdHelp);
+
+  const titulo = updateTaskForm.querySelector("#tituloUpd").value;
+  const descripcion = updateTaskForm.querySelector("#descripcionUpd").value;
+
+  const id = updateTaskFormContent.querySelector("#tarea-id").innerText;
+
+  const response = await api(`/tareas/edit/${id}`, "put", {
+    titulo,
+    descripcion,
+  });
+
+  if (response.error) {
+    showFormErrors(response.error, "update");
+  } else {
+    cancelarUpdate();
+    mostrarTareas();
   }
 }
 
@@ -210,8 +286,7 @@ async function eliminarTarea(id) {
     const filaTarea = document.querySelector(`[data-id='${id}']`);
     filaTarea.remove();
 
-    const dni_usuario = localStorage.getItem("dni_usuario");
-    const tareas = await api(`/tareas/${dni_usuario}`, "get");
+    const tareas = await api(`/tareas/`, "get");
     // Si después de eliminar la tarea ya no hay más para mostrar, oculto el panel central
     if (tareas.length == 0) {
       panelTareas.classList.add("is-hidden");
@@ -230,8 +305,7 @@ async function completarTarea(id) {
   ) {
     await api(`/tareas/done/${id}`, "put");
 
-    const dni_usuario = localStorage.getItem("dni_usuario");
-    mostrarTareas(dni_usuario);
+    mostrarTareas();
   }
 }
 
@@ -257,10 +331,10 @@ function showFormErrors(errors, action) {
     // action == "update"
     errors.forEach((error) => {
       switch (error.field) {
-        case "name":
-          tituloHelpUpd.innerText = error.msg;
-          tituloHelpUpd.classList.remove("is-hidden");
-          tituloTextUpd.classList.add("is-danger");
+        case "titulo":
+          inputTituloUpdHelp.innerText = error.msg;
+          inputTituloUpdHelp.classList.remove("is-hidden");
+          tituloUpd.classList.add("is-danger");
           break;
         default:
           break;
