@@ -140,3 +140,7 @@ nav {
 .usrInfo {
   font-size: 1.2rem;
 }
+
+.is-underlined {
+  text-decoration: underline;
+}
