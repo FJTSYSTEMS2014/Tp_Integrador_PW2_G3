@@ -305,6 +305,9 @@ async function completarTarea(id) {
   ) {
     await api(`/tareas/done/${id}`, "put");
 
+    createTaskFormContent.style.display = "";
+    updateTaskFormContent.style.display = "none";
+
     mostrarTareas();
   }
 }
