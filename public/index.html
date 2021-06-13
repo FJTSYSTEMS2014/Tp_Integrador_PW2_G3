@@ -111,6 +111,52 @@
       </div>
     </nav>
 
+    <nav class="panel" style="display: none" id="form-update">
+      <p class="panel-heading">Editar tarea nº <span id="tarea-id"></span></p>
+      <div class="panel-block">
+        <form id="updateTaskForm">
+          <div class="block">
+            <div class="columns">
+              <div class="column m-5 is-two-fifths">
+                <label class="label" for="titulo">Título: </label>
+                <input
+                  type="text"
+                  class="input is-primary"
+                  id="tituloUpd"
+                  placeholder="Título"
+                />
+                <p id="inputTituloUpdHelp" class="help is-hidden is-danger"></p>
+              </div>
+
+              <div class="column m-5 is-three-fifths">
+                <label class="label" for="descripcion">Descripción:</label>
+                <input
+                  type="text"
+                  class="input is-primary"
+                  id="descripcionUpd"
+                />
+              </div>
+            </div>
+            <button
+              type="button"
+              id = "saveTask"
+              class="button is-small ml-3 mr-1 is-success"
+            >
+              Actualizar tarea
+            </button>
+
+            <button
+              type="button"
+              onclick="cancelarUpdate()"
+              class="button is-small is-danger"
+            >
+              Cancelar
+            </button>
+          </div>
+        </form>
+      </div>
+    </nav>    
+
     <template id="contentRow">
       <div class="columns row w-100">
         <div class="column txtTitulo pt-2"></div>
