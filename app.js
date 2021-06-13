@@ -4,11 +4,19 @@ const app = express ();
 app.set ('view engine', 'ejs');
 app.use (express.urlencoded ({extended: false}));
 app.use (express.json ());
+
+
+// enlazamos a rutas1.js
+app.use ('/', require ('./rutas3'));
+
 // enlazamos a rutas.js
-app.use ('/', require ('./rutas'));
+//app.use ('/usuarios', require ('./rutas'));
 // le indicamos de donde vamos a sacar los imagenes
 
+
 app.use ('/public/img/', express.static ('./public/img'));
+
+
 
 app.use (function (req, res) {
   res.status (404).render ('404');

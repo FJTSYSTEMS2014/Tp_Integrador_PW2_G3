@@ -6,8 +6,10 @@ info:https://ejs.co/  -->
 
 <body>
   <ul class="list-group">
-    <a> <button onclick="myFunction()"> CERRAR SESIÓN </button></ars>
-      <a class="list-group-item list-group-item-secondary" aria-current="page" href="/listar"> VISTA A USUARIOS</a>
+    <ul class="list-group"><h3>Usuario conectado: <strong><%= name %></strong></h13>
+      <a> <button onclick="myFunction()"> CERRAR SESIÓN </button></a>
+      <a class="list-group-item list-group-item-primary" aria-current="page" href="/usuarios/listar"> VISTA DE TODOS LOS USUARIOS</a>
+      <a class="list-group-item list-group-item-secondary" aria-current="page" href="/usuarios/registro">CREAR UN NUEVO USUARIO</a>
 
   </ul>
 
@@ -16,7 +18,7 @@ info:https://ejs.co/  -->
 
 
       <tr class="bg-primary text-white">
-        <th scope="col">ID</th>
+        <th scope="col">TAREA ID</th>
         <th scope="col">DNI</th>
         <th scope="col">TITULO</th>
         <th scope="col">DESCRIPCIÓN</th>
@@ -56,11 +58,13 @@ info:https://ejs.co/  -->
             <%= tareas.eliminated %>
           </td>
           <td>
-            <a href="/add_tareas/<%= tareas.dni_usuario  %>" class="btn btn-outline-info">Nueva tarea<i
+            <a href="/usuarios/add_tareas/<%= tareas.dni_usuario  %>" class="btn btn-outline-info">Nueva tarea<i
                 class='bx bxs-edit'></i></a>
-            <a href="/edit_tareas/<%= tareas.id %>" class="btn btn-outline-info">Editar<i class='bx bxs-edit'></i></a>
-            <a href="/delete_tareas/<%= tareas.id  %>" class="btn btn-outline-danger">Eliminar<i
+            <a href="/usuarios/edit_tareas/<%= tareas.id %>" class="btn btn-outline-info">Editar<i class='bx bxs-edit'></i></a>
+            <a href="/usuarios/delete_tareas/<%= tareas.id  %>" class="btn btn-outline-danger">Eliminar<i
                 class='bx bxs-trash-alt'></i></a>
+                <a href="/usuarios/view_tareas/<%= tareas.dni_usuario %>" class="btn btn-outline-info">Todas las tareas del usuario
+                  por DNI<i class='bx bxs-edit'></i></a>
           </td>
         </tr>
         <% }) %>
@@ -68,7 +72,7 @@ info:https://ejs.co/  -->
     <script>
       function myFunction() {
         localStorage.clear();
-        window.location = "/";
+        window.location = "/logout";
 
       }
     </script>

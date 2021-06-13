@@ -27,7 +27,7 @@
           <li> <button onclick="myFunction()"> Grupo Nº 3 </button></li>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/registro">Registrate Aqui!</a>
+            <a class="nav-link active" aria-current="page" href="/usuarios/registro">Registrate Aqui!</a>
           </li>
 
         </ul>
@@ -38,7 +38,7 @@
     <div class="card border-secondary">
       <div class="card-header"> Acceder </div>
       <div class="card-body">
-        <form action="/verify" method="POST"><img src="../public/img/login-imag.png">
+        <form action="/usuarios/verify" method="POST"><img src="../public/img/login-imag.png">
           <div class="mb-3">
             <label for="user" class="form-label">Username</label>
             <input type="text" class="form-control" id="user11" name="user" tabindex="1">
@@ -48,7 +48,7 @@
           </div>
 
           <button type="submit" class="btn btn-primary" tabindex="5">Guardar</button>
-          <a href="/" class="btn btn-secondary">Cancelar</a>
+          <a href="/usuarios/listar" class="btn btn-secondary">Cancelar</a>
         </form>
       </div>
     </div>
@@ -64,4 +64,4 @@
 
 </body>
 
-</html>
+</html>

@@ -5,9 +5,11 @@ info:https://ejs.co/  -->
 <title>Grupo Nº 3</title>
 
 <body>
-  <ul class="list-group">
-    <a> <button onclick="myFunction()"> CERRAR SESIÓN </button></ars>
-      <a class="list-group-item list-group-item-primary" aria-current="page" href="/tareas">VISTAS TAREAS</a>
+  <ul class="list-group"><h3>Usuario conectado: <strong><%= name %></strong></h13>
+    <a> <button onclick="myFunction()"> CERRAR SESIÓN </button></a>
+      <a class="list-group-item list-group-item-primary" aria-current="page" href="/usuarios/tareas">VER TODAS LAS TAREAS DE LOS USUARIOS</a>
+      <a class="list-group-item list-group-item-secondary" aria-current="page" href="/usuarios/registro">CREAR UN NUEVO USUARIO</a>
+
 
   </ul>
 
@@ -54,14 +56,14 @@ info:https://ejs.co/  -->
           </td>
           <td>
 
-            <a href="/edit/<%= usuarios.dni_usuario %>" class="btn btn-outline-info">Editar<i
+            <a href="/usuarios/edit/<%= usuarios.dni_usuario %>" class="btn btn-outline-info">Editar<i
                 class='bx bxs-edit'></i></a>
-            <a href="/delete/<%= usuarios.dni_usuario%>" class="btn btn-outline-danger">Eliminar<i>
+            <a href="/usuarios/delete/<%= usuarios.dni_usuario%>" class="btn btn-outline-danger">Eliminar<i>
                 <class='bx bxs-trash-alt'>
               </i></a>
-            <a href="/add_tareas/<%= usuarios.dni_usuario %>" class="btn btn-outline-info">Nueva tarea<i
+            <a href="/usuarios/add_tareas/<%= usuarios.dni_usuario %>" class="btn btn-outline-info">Nueva tarea<i
                 class='bx bxs-edit'></i></a>
-            <a href="/view_tareas/<%= usuarios.dni_usuario %>" class="btn btn-outline-info">Todas las tareas del usuario
+            <a href="/usuarios/view_tareas/<%= usuarios.dni_usuario %>" class="btn btn-outline-info">Todas las tareas del usuario
               por DNI<i class='bx bxs-edit'></i></a>
           </td>
         </tr>
@@ -70,7 +72,7 @@ info:https://ejs.co/  -->
     <script>
       function myFunction() {
         localStorage.clear();
-        window.location = "/";
+        window.location = "/logout";
 
       }
     </script>

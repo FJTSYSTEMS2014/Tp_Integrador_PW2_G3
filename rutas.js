@@ -2,7 +2,7 @@ const express = require ('express');
 const rutas = express.Router ();
 const conexion = require ('./database/db');
 // nuevo para utilizar JWT
-const jwt = require ('jsonwebtoken');
+// const jwt = require ('jsonwebtoken');
 
 rutas.get ('/', (req, res) => {
   //iniciar vistas en la carpeta views
@@ -124,7 +124,7 @@ rutas.get ('/delete/:dni_usuario', (req, res) => {
       if (error) {
         console.log (error);
       } else {
-        res.redirect ('/listar');
+        res.redirect ('/usuarios/listar');
       }
     }
   );
@@ -165,7 +165,7 @@ rutas.get ('/delete_tareas/:id', (req, res) => {
     if (error) {
       throw error;
     } else {
-      res.redirect ('/tareas');
+      res.redirect ('/usuarios/tareas');
     }
   });
 });

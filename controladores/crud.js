@@ -25,7 +25,7 @@ exports.salvar = (req, res) => {
       console.log (err);
     } else {
       console.log (' usuario agregado');
-      res.redirect ('/');
+      res.redirect ('/usuarios/listar');
     }
   });
   console.log (info);
@@ -58,7 +58,7 @@ exports.salvar_tarea = (req, res) => {
       console.log (err);
     } else {
       console.log (' tarea agregada');
-      res.redirect ('/tareas');
+      res.redirect ('/usuarios/tareas');
     }
   });
   console.log (user);
@@ -87,7 +87,7 @@ exports.verify = (req, res) => {
           res.render ('404');
         } else {
           console.log ('usuario correcto');
-          res.redirect ('/listar');
+          res.redirect ('/usuarios/listar');
         }
         console.log ('esta por aca ');
       }
@@ -135,7 +135,7 @@ exports.update = (req, res) => {
       if (error) {
         console.log (error);
       } else {
-        res.redirect ('/listar');
+        res.redirect ('/usuarios/listar');
       }
     }
   );
@@ -166,27 +166,9 @@ exports.update_tareas = (req, res) => {
       if (error) {
         console.log (error);
       } else {
-        res.redirect ('/tareas');
+        res.redirect ('/usuarios/tareas');
       }
     }
   );
 };
 
-// verificar token
-
-function verificarToken (req, res, next) {
-  const bearerHeader = req.headers['authorization'];
-
-  if (typeof bearerHeader !== 'undefined') {
-    // aca el token se divide en 3 elementos, el token esta en la posicion1 (2 elemento)
-    const bearerToken = bearerHeader.split (' ')[1];
-    req.token = bearerToken;
-    next ();
-  } else {
-    // 403 significa acceso prohibido
-    res.status (403).send ({
-      Observaciones: `Se encontraron los siguientes errores: `,
-      err,
-    });
-  }
-}
