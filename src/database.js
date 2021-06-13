@@ -68,6 +68,26 @@ module.exports = {
 
     return await this.obtenerTareaporId(result[0].insertId);
   },
+
+  async update(task) {
+    const { id, titulo, descripcion } = task;
+
+    const tarea = await this.obtenerTareaporId(id);
+
+    if (!tarea) {
+      throw new Error(`No existe una tarea con id "${id}`);
+    }
+
+    const fecha = obtenerFecha();
+
+    const result = await connection.execute(
+      "UPDATE tareas SET titulo = ?, descripcion = ?, updated = ? WHERE id = ?",
+      [titulo, descripcion, fecha, id]
+    );
+
+    return result[0].affectedRows;
+  },
+
   // recibe user y password y devuelve un usuario, o undefined en caso contrario
   async buscarUsuarioPorUserPass(username, password) {
     const [usuario] = await connection.execute(

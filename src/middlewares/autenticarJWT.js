@@ -12,6 +12,7 @@ const autenticarJWT = (req, res, next) => {
       if (err) {
         res.status(403).json({
           mensaje: "Error: La sesión ha caducado",
+          error: 403,
         });
       }
 
