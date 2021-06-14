@@ -12,9 +12,10 @@
   </head>
   <body class="text-center">         
           <div class="contenedor">
-            <center><li> <button onclick="myFunction()">Integrantes Grupo Nº 3 </button></li>
+            <center>
             <h1></h1>
-            <% if (login) { %>                
+            <% if (login) { %>   
+              <li> <button onclick="myFunction()">Integrantes Grupo Nº 3 </button></li>             
                 <h1>Bienvenido: <strong><%= name %></strong></h1> 
                 <img src="../public/img/check-user.png">  <br>
                 <a href="/usuarios/listar" class="a-login">Administrar Usuarios</a>                       
